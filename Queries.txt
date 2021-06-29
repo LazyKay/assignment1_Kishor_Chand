@@ -1,0 +1,17 @@
+ans1) select app.profile_id,count(ati.ticket_id) as No_of_tickets_booked
+      from air_passenger_profile as app
+      join air_ticket_info as ati on(app.profile_id=ati.profile_id)
+      group by app.profile_id
+      order by No_of_tickets_booked asc;
+
+ans2) select app.profile_id,app.first_name,app.address,count(ati.ticket_id) as No_of_Tickets
+      from air_passenger_profile as app
+      join air_ticket_info as ati
+      on(app.profile_id=ati.profile_id)
+      group by app.profile_id
+      having count(ati.ticket_id)>=all(select count(ati.ticket_id)
+      from air_passenger_profile as app
+      join air_ticket_info as ati
+      on(app.profile_id=ati.profile_id)
+      group by app.profile_id)
+      order by app.profile_id;
